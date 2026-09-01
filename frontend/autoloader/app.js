@@ -116,12 +116,12 @@
       if (q === 'umtx2' || q === 'poops' || q === 'p2jb') forced = q;
     } catch (e) { }
     if (forced) {
-      uiLog('[force] using ' + forced + ' on firmware ' + (fw ? fw.str : 'unknown'), 'warning');
+      // uiLog('[force] using ' + forced + ' on firmware ' + (fw ? fw.str : 'unknown'), 'warning');
       return forced;
     }
     if (EXPLOIT_MODE === 'umtx2' || EXPLOIT_MODE === 'poops'
       || EXPLOIT_MODE === 'p2jb') {
-      uiLog('[force] using ' + EXPLOIT_MODE + ' on firmware ' + (fw ? fw.str : 'unknown'), 'warning');
+      // uiLog('[force] using ' + EXPLOIT_MODE + ' on firmware ' + (fw ? fw.str : 'unknown'), 'warning');
       return EXPLOIT_MODE;
     }
     if (!fw) {
@@ -159,8 +159,8 @@
        restore the classic full-height log; no-op for the other chains. */
     collapseP2jbStats();
     if (data.ok) {
-      uiLog('Payload loaded (' + data.bytes + ' bytes sent to elfldr).', 'success');
-      updateProgress(100, 'Autoload finished.');
+      // uiLog('Loaded (' + data.bytes + ' bytes sent to elfldr).', 'success');
+      updateProgress(100, 'Store updated.');
 
       /* Payload is running as its own process now — unload the iframe to
          free the memory it held and avoid a browser OOM dialog.
@@ -171,12 +171,12 @@
         try { exploitEl.src = 'about:blank'; } catch (e) { }
       }
     } else {
-      uiLog('[ERROR] Autoload failed: ' + (data.why || 'unknown error'), 'error');
-      updateProgress(0, 'Autoload failed.');
+      uiLog('[ERROR] Update failed: ' + (data.why || 'unknown error'), 'error');
+      updateProgress(0, 'Update failed.');
     }
     setTimeout(function () {
       if (data.ok) {
-        uiLog('Payload running on the console.', 'success');
+        // uiLog('Data is running on the console.', 'success');
       }
     }, 1500);
   }
@@ -233,13 +233,13 @@
       if (mirrorSlopkit.warned !== frameUrl) {
         mirrorSlopkit.warned = frameUrl;
         if (start) {
-          uiLog('[iframe] slopkit landing page loaded (RUN button) — chain not started.', 'warning');
+          // uiLog('[iframe] slopkit landing page loaded (RUN button) — chain not started.', 'warning');
         } else if (arm && !arm.hidden) {
-          uiLog('[iframe] slopkit page is NOT armed (?go=1 missing) — nothing will run.', 'warning');
+          // uiLog('[iframe] slopkit page is NOT armed (?go=1 missing) — nothing will run.', 'warning');
         } else if (cat && title.indexOf('slopkit') !== -1) {
-          uiLog('[iframe] slopkit page loaded without its screen (title="' + title + '").', 'warning');
+          // uiLog('[iframe] slopkit page loaded without its screen (title="' + title + '").', 'warning');
         } else {
-          uiLog('[iframe] page has no slopkit screen: title="' + title + '"', 'warning');
+          // uiLog('[iframe] page has no slopkit screen: title="' + title + '"', 'warning');
         }
       }
       /* Re-arm only for a wrong *slopkit* page (landing page or not-armed
@@ -247,14 +247,14 @@
       var isSlopkitPage = !!start || (arm && !arm.hidden);
       if (chainStarted && isSlopkitPage && repairCount < 5) {
         repairCount++;
-        uiLog('[iframe] re-arming (attempt ' + repairCount + '): ' + EXPLOIT_URL, 'info');
+        // uiLog('[iframe] re-arming (attempt ' + repairCount + '): ' + EXPLOIT_URL, 'info');
         try {
           exploitEl.src = EXPLOIT_URL;
         } catch (e) {
-          uiLog('[iframe] re-arm failed: ' + (e && e.message ? e.message : e), 'error');
+          // uiLog('[iframe] re-arm failed: ' + (e && e.message ? e.message : e), 'error');
         }
       } else if (chainStarted && isSlopkitPage) {
-        uiLog('[iframe] giving up after ' + repairCount + ' re-arm attempts.', 'error');
+        // uiLog('[iframe] giving up after ' + repairCount + ' re-arm attempts.', 'error');
       }
       return;
     }
@@ -277,7 +277,7 @@
          (that floods the UI and hides the actual result). */
       if (/^>/.test(line) || /^\[\+\]/.test(line)
         || /^(STAGE[0-5]|ALLPROC-CHECK|ALIASES-REPAIRED|POOPS-COMPLETE|POOPS-VERDICT|LATCH-HELD|LATCH-READ|OFFSETS-READY|WEBKIT-BASE|MODULE-BASES|SOCKETS|SPAWN|WAKEGATE)/.test(line)) {
-        uiLog('[log] ' + line, 'info');
+        // uiLog('[log] ' + line, 'info');
       } else if (/FAIL|ERROR|REFUSED|REBOOT|failed|panic|exception/i.test(line)
         || /^\[-\]/.test(line)) {
         uiLog('[log] ' + line, 'error');
@@ -290,11 +290,11 @@
       lastStageCls = stage.className || '';
       progressLabel.textContent = lastStageText;
       if (lastStageCls.indexOf('bad') !== -1) {
-        uiLog('[stage] ' + lastStageText, 'error');
+        // uiLog('[stage] ' + lastStageText, 'error');
       } else if (lastStageCls.indexOf('ok') !== -1) {
-        uiLog('[stage] ' + lastStageText, 'success');
+        // uiLog('[stage] ' + lastStageText, 'success');
       } else {
-        uiLog('[stage] ' + lastStageText, 'info');
+        // uiLog('[stage] ' + lastStageText, 'info');
       }
     }
 
@@ -324,7 +324,7 @@
       for (; earlyLinesLogged < earlyLines.length; earlyLinesLogged++) {
         var eline = earlyLines[earlyLinesLogged].trim();
         if (eline) {
-          uiLog('[early] ' + eline, /ERROR|FAIL/i.test(eline) ? 'error' : 'info');
+          // uiLog('[early] ' + eline, /ERROR|FAIL/i.test(eline) ? 'error' : 'info');
         }
       }
     }
@@ -684,13 +684,13 @@
       if (mirrorP2jb.warned !== frameUrl) {
         mirrorP2jb.warned = frameUrl;
         if (runP2jb) {
-          uiLog('[iframe] slopkit landing page loaded — chain not started.', 'warning');
+          // uiLog('[iframe] slopkit landing page loaded — chain not started.', 'warning');
         } else if (arm && !arm.hidden) {
-          uiLog('[iframe] p2jb page is NOT armed (?go=1 missing) — nothing will run.', 'warning');
+          // uiLog('[iframe] p2jb page is NOT armed (?go=1 missing) — nothing will run.', 'warning');
         } else if (title.indexOf('slopkit') !== -1) {
-          uiLog('[iframe] p2jb page loaded without its screen (title="' + title + '").', 'warning');
+          // uiLog('[iframe] p2jb page loaded without its screen (title="' + title + '").', 'warning');
         } else {
-          uiLog('[iframe] page has no p2jb screen: title="' + title + '"', 'warning');
+          // uiLog('[iframe] page has no p2jb screen: title="' + title + '"', 'warning');
         }
       }
       /* Re-arm only for a wrong *slopkit* page (landing page or not-armed
@@ -698,14 +698,14 @@
       var isSlopkitPage = !!runP2jb || (arm && !arm.hidden);
       if (chainStarted && isSlopkitPage && repairCount < 5) {
         repairCount++;
-        uiLog('[iframe] re-arming (attempt ' + repairCount + '): ' + EXPLOIT_URL, 'info');
+        // uiLog('[iframe] re-arming (attempt ' + repairCount + '): ' + EXPLOIT_URL, 'info');
         try {
           exploitEl.src = EXPLOIT_URL;
         } catch (e) {
-          uiLog('[iframe] re-arm failed: ' + (e && e.message ? e.message : e), 'error');
+          // uiLog('[iframe] re-arm failed: ' + (e && e.message ? e.message : e), 'error');
         }
       } else if (chainStarted && isSlopkitPage) {
-        uiLog('[iframe] giving up after ' + repairCount + ' re-arm attempts.', 'error');
+        // uiLog('[iframe] giving up after ' + repairCount + ' re-arm attempts.', 'error');
       }
       return;
     }
@@ -734,7 +734,7 @@
          debug stream (LEAK-/SPRAY-/TRIPLET/PROGRESS every 15 s, ...) stays
          off our log — the livestat bar above carries the live progress. */
       if (/^(POOPS-BOOT|OFFSETS-READY|TRIGGER-ARMED|TRIGGER-FIRED|LATCH-SET|LATCH-ESCALATE|LATCH-CLEAR|LATCH-HELD|LATCH-RELEASED|POOPS-LATCHED|POOPS-STALLED|BOOT-STALLED|CHAIN-DEAD|STAGE5-DONE|POOPS-COMPLETE|POOPS-FAILED|ELFLDR-MENU-VISIBLE|ELFLDR-UP|ELF-SENT|ELF-SEND-FAILED|ELF-SENDER-BLOCKED|KEXP-JOIN|KEXP-JOIN-PRE|KEXP-SPAWN|KEXP-ELF|AUTOLOAD-OK|AUTOLOAD-FAILED)/.test(line)) {
-        uiLog('[log] ' + line, 'info');
+        // uiLog('[log] ' + line, 'info');
       } else if (/FAIL|ERROR|REFUSED|REBOOT|failed|panic|exception/i.test(line)
         || /^\[-\]/.test(line)) {
         uiLog('[log] ' + line, 'error');
@@ -757,23 +757,23 @@
       if (!p2jbComplete && p2jbLastStageText.indexOf('ELF LOADER READY') !== -1) {
         p2jbComplete = true;
         progressBar.style.transform = 'scaleX(1)';
-        uiLog('[p2jb] exploit complete — elfldr ready.', 'success');
+        // uiLog('[p2jb] exploit complete — elfldr ready.', 'success');
         /* Pin the panel green at 100% until the autoload result lands, then
            onAutoloadResult collapses back to the classic full-height log.
            The iframe stays loaded — it holds the ROP workers/threads. */
         completeP2jbStats();
       }
       if (p2jbLastStageCls.indexOf('bad') !== -1) {
-        uiLog('[stage] ' + p2jbLastStageText, 'error');
+        // uiLog('[stage] ' + p2jbLastStageText, 'error');
         /* Tint the panel status red so a mid-run failure is visible there
            too (the panel stays up for diagnostics on failures). */
         if (p2jbStats && p2jbStats.status) {
           p2jbStats.status.className = 'stats-status bad';
         }
       } else if (p2jbLastStageCls.indexOf('ok') !== -1) {
-        uiLog('[stage] ' + p2jbLastStageText, 'success');
+        // uiLog('[stage] ' + p2jbLastStageText, 'success');
       } else {
-        uiLog('[stage] ' + p2jbLastStageText, 'info');
+        // uiLog('[stage] ' + p2jbLastStageText, 'info');
       }
     }
 
@@ -801,7 +801,7 @@
       for (; p2jbEarlyLinesLogged < earlyLines.length; p2jbEarlyLinesLogged++) {
         var eline = earlyLines[p2jbEarlyLinesLogged].trim();
         if (eline) {
-          uiLog('[early] ' + eline, /ERROR|FAIL/i.test(eline) ? 'error' : 'info');
+          // uiLog('[early] ' + eline, /ERROR|FAIL/i.test(eline) ? 'error' : 'info');
         }
       }
     }
@@ -820,7 +820,7 @@
   }
 
   function start() {
-    uiLog('WebKit Autoloader by PLK', 'success');
+    uiLog('Starting...', 'success');
     updateProgress(0, 'Waiting to start...');
 
     window.addEventListener('message', function (event) {

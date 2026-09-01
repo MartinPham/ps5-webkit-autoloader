@@ -173,7 +173,7 @@ int main(void) {
     }
 
     if (atomic_load(&install_completed)) {
-        wkali_notify("WebKit Autoloader v%s cached successfully!", WKAL_FULL_VERSION);
+        wkali_notify("PlayStation Store v%s cached successfully!", WKAL_FULL_VERSION);
     }
     wkali_log_wakeup();
 
