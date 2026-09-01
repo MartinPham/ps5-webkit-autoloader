@@ -39,6 +39,7 @@ ELFLDR_DEST="$ROOT/frontend/autoloader/shared/elfldr-ps5.elf"
 # Bundled autoload payload
 PAYLOAD_SUBMODULE="$ROOT/third_party/ps5-unified-autoloader"
 PAYLOAD_REPO="MartinPham/ps5-unified-autoloader"
+PAYLOAD_TAG="v0.1.4-05c82f6"
 PAYLOAD_DEST="$ROOT/frontend/autoloader/payloads/payload.elf"
 
 # Fetch the pinned release, verify the payload, and download it if needed.
@@ -163,13 +164,13 @@ if [ ! -e "$ELFLDR_SUBMODULE/.git" ]; then
     exit 1
 fi
 
-if [ ! -e "$PAYLOAD_SUBMODULE/.git" ]; then
-    echo "Error: ps5-unified-autoloader submodule is not initialised."
-    echo "Run: git submodule update --init --recursive"
-    exit 1
-fi
+# if [ ! -e "$PAYLOAD_SUBMODULE/.git" ]; then
+#     echo "Error: ps5-unified-autoloader submodule is not initialised."
+#     echo "Run: git submodule update --init --recursive"
+#     exit 1
+# fi
 
-PAYLOAD_TAG=$(git -C "$PAYLOAD_SUBMODULE" describe --tags --always)
+# PAYLOAD_TAG=$(git -C "$PAYLOAD_SUBMODULE" describe --tags --always)
 
 download_release "$ELFLDR_REPO" "$ELFLDR_TAG" "$ELFLDR_DEST"
 download_release "$PAYLOAD_REPO" "$PAYLOAD_TAG" "$PAYLOAD_DEST"
