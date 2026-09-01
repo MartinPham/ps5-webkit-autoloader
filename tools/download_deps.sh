@@ -38,7 +38,7 @@ ELFLDR_DEST="$ROOT/frontend/autoloader/shared/elfldr-ps5.elf"
 
 # Bundled autoload payload
 PAYLOAD_SUBMODULE="$ROOT/third_party/ps5-unified-autoloader"
-PAYLOAD_REPO="itsPLK/ps5-unified-autoloader"
+PAYLOAD_REPO="MartinPham/ps5-unified-autoloader"
 PAYLOAD_DEST="$ROOT/frontend/autoloader/payloads/payload.elf"
 
 # Fetch the pinned release, verify the payload, and download it if needed.
